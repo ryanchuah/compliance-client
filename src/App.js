@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./pages/Login";
@@ -6,33 +6,35 @@ import Index from "./pages/Index";
 import Register from "./pages/Register";
 
 function App() {
-  return (
-    <Router>
-      <Route
-        exact
-        path="/"
-        render={props => {
-          return <Index />;
-        }}
-      />
+    const [user, setUser] = useState({});
 
-      <Route
-        exact
-        path="/login"
-        render={props => {
-          return <Login />;
-        }}
-      />
+    return (
+        <Router>
+            <Route
+                exact
+                path="/"
+                render={props => {
+                    return <Index user={user} />;
+                }}
+            />
 
-      <Route
-        exact
-        path="/register"
-        render={props => {
-          return <Register />;
-        }}
-      />
-    </Router>
-  );
+            <Route
+                exact
+                path="/login"
+                render={props => {
+                    return <Login setUser={setUser} />;
+                }}
+            />
+
+            <Route
+                exact
+                path="/register"
+                render={props => {
+                    return <Register />;
+                }}
+            />
+        </Router>
+    );
 }
 
 export default App;

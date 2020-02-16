@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 
-function Index() {
-  // Declare a new state variable, which we'll call "count"
+function Index(props) {
+    const [user, setUser] = useState({});
 
-  return (
-    <div>
-      <p>Index Page</p>
-    </div>
-  );
+    useEffect(() => {
+        setUser(props.user);
+    }, [props.user.isLoggedIn]);
+    return (
+        <div>
+            <p>Index</p>
+            {user.isLoggedIn && <p>Welcome {user.username}</p>}
+        </div>
+    );
 }
 
-export default Index
+export default Index;
