@@ -12,7 +12,7 @@ function Register(props) {
         try {
             console.log("posting now");
 
-            const response = await axios.post("/users/register", {
+            const response = await axios.post("/user/register", {
                 username,
                 password
             });

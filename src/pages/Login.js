@@ -6,7 +6,6 @@ function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [redirectTo, setRedirectTo] = useState("");
-    const [user, setUser] = useState({});
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -14,7 +13,7 @@ function Login(props) {
         try {
             console.log("posting now");
 
-            const response = await axios.post("/users/login", {
+            const response = await axios.post("/user/login", {
                 username,
                 password
             });
@@ -28,9 +27,10 @@ function Login(props) {
                     isLoggedIn: true,
                     username: response.data.username
                 });
-                setRedirectTo("/");
+                setRedirectTo("/dashboard");
             } else {
                 console.log("not logged in");
+                console.log(response.status);
             }
         } catch (err) {
             console.log("login server error");
@@ -42,6 +42,7 @@ function Login(props) {
     if (redirectTo) {
         return <Redirect to={{ pathname: redirectTo }} />;
     }
+
     return (
         <div>
             <p>Login Page</p>

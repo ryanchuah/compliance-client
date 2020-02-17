@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function Index(props) {
     const [user, setUser] = useState({});
@@ -6,6 +7,11 @@ function Index(props) {
     useEffect(() => {
         setUser(props.user);
     }, [props.user.isLoggedIn]);
+
+    // useEffect(() => {
+    //     getUser();
+    // }, [props.user.isLoggedIn]);
+
     return (
         <div>
             <p>Index</p>
