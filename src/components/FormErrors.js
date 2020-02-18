@@ -4,31 +4,20 @@ import { Alert } from "react-bootstrap";
 function FormErrors(props) {
     const [errors, setErrors] = useState([]);
 
-    useEffect(
-        () =>
-            setErrors(
-                props.formErrors.map(message => ({
-                    message,
-                    show: true
-                }))
-            ),
-        [props.formErrors]
-    );
+    useEffect(() => setErrors(props.formErrors), [props.formErrors]);
 
     return errors.map(error => {
         return (
             <Alert
-                key={error.message}
+                key={error}
                 variant="danger"
                 onClose={() => {
-                    const updatedErrors = errors.filter(
-                        err => err.message != error.message
-                    );
+                    const updatedErrors = errors.filter(err => err != error);
                     setErrors(updatedErrors);
                 }}
                 dismissible
             >
-                {error.message}
+                {error}
             </Alert>
         );
     });

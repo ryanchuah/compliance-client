@@ -38,6 +38,7 @@ function Login(props) {
 
             if (err.response.status === 401) {
                 // Incorrect username password pair
+                setFormErrors(["Incorrect username or password"]);
             }
         }
     };
