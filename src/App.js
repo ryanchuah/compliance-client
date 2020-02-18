@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
-import Navbar from "./components/Navbar";
+import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
 import axios from "axios";
 
 function App() {
-    const [user, setUser] = useState({ isLoggedIn: null, username: null });
+    const [user, setUser] = useState({ isLoggedIn: false, username: null });
 
     useEffect(() => {
         getUser();
@@ -19,8 +19,6 @@ function App() {
 
     function getUser() {
         axios.get("/user/").then(response => {
-            console.log("Get user response: ");
-            console.log(response.data);
             if (response.data.user) {
                 console.log(
                     "Get User: There is a user saved in the server session: "
@@ -41,7 +39,7 @@ function App() {
     }
     return (
         <Router>
-            <Navbar user={user} setUser={setUser} />
+            <NavigationBar user={user} setUser={setUser} />
             {user.loggedIn && <p>Join the party, {user.username}!</p>}
             <Route
                 exact
