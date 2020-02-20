@@ -35,6 +35,9 @@ function NavigationBar(props) {
                     {props.user.isLoggedIn && (
                         <Nav.Link onClick={logout}>Logout</Nav.Link>
                     )}
+                    {props.user.isLoggedIn && (
+                        <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+                    )}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
