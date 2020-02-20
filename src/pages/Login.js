@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import FormErrors from "../components/FormErrors";
+import FlashMessage from "../components/FlashMessage";
 
 function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [redirectTo, setRedirectTo] = useState("");
     const [formErrors, setFormErrors] = useState([]);
+    const location = useLocation();
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -39,6 +41,8 @@ function Login(props) {
             if (err.response.status === 401) {
                 // Incorrect username password pair
                 setFormErrors(["Incorrect username or password"]);
+            } else {
+                setRedirectTo("/serverError");
             }
         }
     };
@@ -66,6 +70,7 @@ function Login(props) {
     return (
         <div>
             <p>Login Page</p>
+            <FlashMessage flashMessage={location.state.flashMessage} />
             <FormErrors formErrors={formErrors} />
             <form onSubmit={handleSubmit} method="post">
                 <div>

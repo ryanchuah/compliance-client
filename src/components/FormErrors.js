@@ -12,7 +12,7 @@ function FormErrors(props) {
                 key={error}
                 variant="danger"
                 onClose={() => {
-                    const updatedErrors = errors.filter(err => err != error);
+                    const updatedErrors = errors.filter(err => err !== error);
                     setErrors(updatedErrors);
                 }}
                 dismissible

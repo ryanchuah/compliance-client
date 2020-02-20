@@ -6,6 +6,7 @@ import Index from "./pages/Index";
 import Register from "./pages/Register";
 import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
+import ServerError from "./pages/ServerError"
 import axios from "axios";
 
 function App() {
@@ -80,6 +81,14 @@ function App() {
                 path="/register"
                 render={props => {
                     return <Register />;
+                }}
+            />
+
+<Route
+                exact
+                path="/serverError"
+                render={props => {
+                    return <ServerError />;
                 }}
             />
         </Router>
