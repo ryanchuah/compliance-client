@@ -24,10 +24,11 @@ function App() {
                 console.log(
                     "Get User: There is a user saved in the server session: "
                 );
-
+                console.log(response.data.user);
+                
                 setUser({
                     isLoggedIn: true,
-                    username: response.data.user.username
+                    username: response.data.user
                 });
             } else {
                 console.log("Get user: no user");
