@@ -70,7 +70,7 @@ function Login(props) {
     return (
         <div>
             <p>Login Page</p>
-            <FlashMessage flashMessage={location.state.flashMessage} />
+            {location.state && <FlashMessage flashMessage={location.state.flashMessage} />}
             <FormErrors formErrors={formErrors} />
             <form onSubmit={handleSubmit} method="post">
                 <div>
