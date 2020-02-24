@@ -5,8 +5,7 @@ import FormErrors from "../components/FormErrors";
 import FlashMessage from "../components/FlashMessage";
 
 function Login(props) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [formValues, setFormValues] = useState({email:"", password:""})
     const [redirectTo, setRedirectTo] = useState("");
     const [formErrors, setFormErrors] = useState([]);
     const location = useLocation();
@@ -17,17 +16,14 @@ function Login(props) {
             return;
         }
         try {
-            const response = await axios.post("/user/login", {
-                username,
-                password
-            });
+            const response = await axios.post("/user/login", formValues);
 
             if (response.status === 200) {
                 console.log("logged in");
 
                 props.setUser({
                     isLoggedIn: true,
-                    username: response.data.username
+                    email: response.data.email
                 });
                 setRedirectTo("/dashboard");
             } else {
@@ -39,8 +35,8 @@ function Login(props) {
             console.log(err.response);
 
             if (err.response.status === 401) {
-                // Incorrect username password pair
-                setFormErrors(["Incorrect username or password"]);
+                // Incorrect email password pair
+                setFormErrors(["Incorrect email or password"]);
             } else {
                 setRedirectTo("/serverError");
             }
@@ -49,10 +45,10 @@ function Login(props) {
 
     const validateForm = () => {
         const errors = [];
-        if (username.length < 1) {
-            errors.push("Please enter your username");
+        if (formValues.email.length < 1) {
+            errors.push("Please enter your email");
         }
-        if (password.length < 1) {
+        if (formValues.password.length < 1) {
             errors.push("Please enter your password");
         }
 
@@ -62,6 +58,13 @@ function Login(props) {
         }
         return true;
     };
+
+    const handleChange = e => {
+        setFormValues({
+            ...formValues,
+            [e.target.name]: e.target.value
+        });
+    }
 
     if (redirectTo) {
         return <Redirect to={{ pathname: redirectTo }} />;
@@ -78,8 +81,8 @@ function Login(props) {
                     <input
                         type="text"
                         name="email"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        value={formValues.email}
+                        onChange={handleChange}
                     />
                 </div>
                 <div>
@@ -87,8 +90,8 @@ function Login(props) {
                     <input
                         type="password"
                         name="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        value={formValues.password}
+                        onChange={handleChange}
                     />
                 </div>
                 <div>

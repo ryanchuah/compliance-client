@@ -4,9 +4,8 @@ import { Redirect } from "react-router-dom";
 import FormErrors from "../components/FormErrors";
 
 function Register(props) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
     const [redirect, setRedirect] = useState("");
+    const [formValues, setFormValues] = useState({name:"",email:"",password:""});
     const [formErrors, setFormErrors] = useState([]);
 
     const handleSubmit = async e => {
@@ -16,13 +15,7 @@ function Register(props) {
         }
 
         try {
-            console.log("posting now");
-
-            const response = await axios.post("/user/register", {
-                username,
-                password
-            });
-
+            const response = await axios.post("/user/register", formValues);
             console.log(response);
             if (response.status === 200) {
                 setRedirect({
@@ -34,24 +27,20 @@ function Register(props) {
                     }
                 });
             }
-            // if (response.data) {
-            //     console.log("successful signup");
-            //     setRedirectTo("/register");
-            // } else {
-            //     console.log("sign up error");
-            // }
         } catch (err) {
             console.log("sign up server error");
-
             console.log(err);
         }
     };
     const validateForm = () => {
         const errors = [];
-        if (username.length < 1) {
-            errors.push("Please enter your username");
+        if (formValues.name.length < 1) {
+            errors.push("Please enter your name");
         }
-        if (password.length < 1) {
+        if (formValues.email.length < 1) {
+            errors.push("Please enter your email");
+        }
+        if (formValues.password.length < 1) {
             errors.push("Please enter your password");
         }
 
@@ -60,6 +49,13 @@ function Register(props) {
             return false;
         }
         return true;
+    };
+
+    const handleChange = e => {
+        setFormValues({
+            ...formValues,
+            [e.target.name]: e.target.value
+        });
     };
 
     if (redirect.pathname) {
@@ -80,12 +76,21 @@ function Register(props) {
 
             <form onSubmit={handleSubmit} method="post">
                 <div>
+                    <label>Name:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formValues.name}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
                     <label>Email:</label>
                     <input
                         type="text"
                         name="email"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        value={formValues.username}
+                        onChange={handleChange}
                     />
                 </div>
                 <div>
@@ -93,8 +98,8 @@ function Register(props) {
                     <input
                         type="password"
                         name="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        value={formValues.password}
+                        onChange={handleChange}
                     />
                 </div>
                 <div>
