@@ -6,7 +6,8 @@ import Index from "./pages/Index";
 import Register from "./pages/Register";
 import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
-import ServerError from "./pages/ServerError"
+import ServerError from "./pages/ServerError";
+import Chatbot from "./pages/Chatbot";
 import axios from "axios";
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
                     "Get User: There is a user saved in the server session: "
                 );
                 console.log(response.data.user);
-                
+
                 setUser({
                     isLoggedIn: true,
                     username: response.data.user
@@ -69,6 +70,24 @@ function App() {
                 />
             )}
 
+            {user.isLoggedIn ? (
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        return <Chatbot user={user} />;
+                    }}
+                />
+            ) : (
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        return <p>Not logged in</p>;
+                    }}
+                />
+            )}
+
             <Route
                 exact
                 path="/login"
@@ -85,7 +104,7 @@ function App() {
                 }}
             />
 
-<Route
+            <Route
                 exact
                 path="/serverError"
                 render={props => {

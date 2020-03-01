@@ -38,6 +38,9 @@ function NavigationBar(props) {
                     {props.user.isLoggedIn && (
                         <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                     )}
+                    {props.user.isLoggedIn && (
+                        <Nav.Link href="/chatbot">Chatbot</Nav.Link>
+                    )}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
