@@ -3,24 +3,24 @@ import axios from "axios";
 
 function History(props) {
     const [user, setUser] = useState({});
-    const [userHistory, setUserHistory] = useState([])
+    const [conversationHistory, setConversationHistory] = useState([])
 
     useEffect(() => {
         setUser(props.user);
     }, [props.user.isLoggedIn]);
 
     useEffect(() => {
-        console.log(userHistory);
+        console.log(conversationHistory);
         const fetchHistory = async () => {
             const history = await axios.get("/api/userData/history")
-            setUserHistory(history.data)
+            setConversationHistory(history.data)
         }
         fetchHistory()
-    }, [userHistory.length])
+    }, [conversationHistory.length])
 
     return (
         <div>
-            {userHistory}
+            {conversationHistory}
         </div>
     );
 }
