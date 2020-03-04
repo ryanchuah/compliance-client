@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import ServerError from "./pages/ServerError";
 import Chatbot from "./pages/Chatbot";
 import axios from "axios";
+import History from "./pages/History"
 
 function App() {
     const [user, setUser] = useState({ isLoggedIn: false, username: null });
@@ -53,32 +54,39 @@ function App() {
             />
 
             {user.isLoggedIn ? (
-                <Route
-                    exact
-                    path="/dashboard"
-                    render={props => {
-                        return <Dashboard user={user} />;
-                    }}
-                />
-            ) : (
-                <Route
-                    exact
-                    path="/dashboard"
-                    render={props => {
-                        return <p>Not logged in</p>;
-                    }}
-                />
-            )}
-
-            {user.isLoggedIn ? (
-                <Route
+                <React.Fragment>
+                    <Route
+                        exact
+                        path="/dashboard"
+                        render={props => {
+                            return <Dashboard user={user} />;
+                        }}
+                    />
+                    <Route
                     exact
                     path="/chatbot"
                     render={props => {
                         return <Chatbot user={user} />;
                     }}
                 />
-            ) : (
+                <Route
+                    exact
+                    path="/history"
+                    render={props => {
+                        return <History user={user} />;
+                    }}
+                />
+                </React.Fragment>
+            ) : 
+                (
+            <React.Fragment>
+                <Route
+                    exact
+                    path="/dashboard"
+                    render={props => {
+                        return <p>Not logged in</p>;
+                    }}
+                />
                 <Route
                     exact
                     path="/chatbot"
@@ -86,7 +94,18 @@ function App() {
                         return <p>Not logged in</p>;
                     }}
                 />
+                <Route
+                    exact
+                    path="/history"
+                    render={props => {
+                        return <p>Not logged in</p>;
+                    }}
+                />
+
+            </React.Fragment>
             )}
+
+         
 
             <Route
                 exact
