@@ -77,7 +77,7 @@ function App() {
                     }}
                 />
                 </React.Fragment>
-            ) : 
+            ) : // user not logged in
                 (
             <React.Fragment>
                 <Route

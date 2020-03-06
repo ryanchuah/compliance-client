@@ -21,6 +21,7 @@ function History(props) {
     return (
         <div>
             {conversationHistory}
+            <br></br>
         </div>
     );
 }

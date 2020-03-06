@@ -1,10 +1,10 @@
-html,
+/* html,
 body {
     font: 14px/1.21 "Helvetica Neue", arial, sans-serif;
     font-weight: 400;
     box-sizing: border-box;
-    background-color: #9abdf3;
-}
+    background-color: black;
+} */
 
 *,
 *::before,
@@ -27,7 +27,14 @@ h1 {
     background-color: gray;
 }
 
-.conversation-view {
+/* .conversation-view {
+    width: 100%;
+    min-height: 600px;
+    padding: 20px 40px;
+    background-color: #fdfcfb;
+} */
+
+.conversationHistory-view {
     width: 100%;
     min-height: 600px;
     padding: 20px 40px;
@@ -37,6 +44,7 @@ h1 {
 .message-box {
     width: 100%;
     padding: 10px 30px;
+    background-color: aquamarine;
 }
 
 .text-input {

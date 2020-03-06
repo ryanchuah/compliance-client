@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../Chatbot.css"
+import { useEffect } from "react";
 
 function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
@@ -45,6 +46,28 @@ function Chatbot(props) {
 
         setUserMessage("");
     };
+
+    // useEffect(() => {
+
+    //     const response = fetch("/api/inputText", {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({
+    //             message: userMessage,
+    //             sessionID: "ryan"
+    //         })
+    //     });
+
+    //     const data = response.json();
+    //     console.log(data);
+
+    //     var msg = {
+    //         text: data.message,
+    //         user: "ai"
+    //     };
+
+    //     setConversationHistory( [...conversationHistory, msg])
+    // }, [conversationHistory.length]);
 
     const ChatBubble = (text, i, className) => {
         return (
