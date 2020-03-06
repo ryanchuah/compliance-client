@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Chatbot.css"
+import "../Chatbot.css";
 import { useEffect } from "react";
 
 function Chatbot(props) {
@@ -20,9 +20,10 @@ function Chatbot(props) {
             user: "human"
         };
 
-       setConversationHistory(
-            [...conversationHistory, msg]
-        );
+        setConversationHistory(conversationHistory => [
+            ...conversationHistory,
+            msg
+        ]);
 
         const response = await fetch("/api/inputText", {
             method: "POST",
@@ -41,33 +42,13 @@ function Chatbot(props) {
             user: "ai"
         };
 
-        setConversationHistory( [...conversationHistory, msg])
-        
+        setConversationHistory(conversationHistory => [
+            ...conversationHistory,
+            msg
+        ]);
 
         setUserMessage("");
     };
-
-    // useEffect(() => {
-
-    //     const response = fetch("/api/inputText", {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({
-    //             message: userMessage,
-    //             sessionID: "ryan"
-    //         })
-    //     });
-
-    //     const data = response.json();
-    //     console.log(data);
-
-    //     var msg = {
-    //         text: data.message,
-    //         user: "ai"
-    //     };
-
-    //     setConversationHistory( [...conversationHistory, msg])
-    // }, [conversationHistory.length]);
 
     const ChatBubble = (text, i, className) => {
         return (
@@ -94,7 +75,7 @@ function Chatbot(props) {
                     <form onSubmit={handleSubmit}>
                         <input
                             value={userMessage}
-                            onInput={handleChange}
+                            onChange={handleChange}
                             className="text-input"
                             type="text"
                             autoFocus
