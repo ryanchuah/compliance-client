@@ -80,7 +80,8 @@ function Register(props) {
 
     return (
         <div>
-            <p>Register Page</p>
+            <h3 className="my-3">Register</h3>
+
             <FormErrors formErrors={formErrors} />
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formBasicName">

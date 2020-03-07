@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../Chatbot.css";
 import { useEffect } from "react";
+import {Form, Col, Button} from "react-bootstrap"
 
 function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
@@ -13,7 +14,9 @@ function Chatbot(props) {
     const handleSubmit = async event => {
         // preventing a default browser reloading
         event.preventDefault();
-        if (!userMessage.trim()) return;
+        if (!userMessage.trim()) {
+            return
+        };
 
         var msg = {
             text: userMessage,
@@ -66,13 +69,36 @@ function Chatbot(props) {
         ChatBubble(e.text, index, e.user)
     );
 
+    const formStyle = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1vh 10%",
+
+    }
+
     return (
-        <div>
+        <div style={{ maxHeight: "100vh" }}>
             <h1>Compliance Expert, your friendly assistant</h1>
             <div className="chat-window">
                 <div className="conversationHistory-view">{chat}</div>
                 <div className="message-box">
-                    <form onSubmit={handleSubmit}>
+                    <Form onSubmit={handleSubmit} style={formStyle}>
+
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Type here..."
+                                    value={userMessage}
+                                    onChange={handleChange}
+                                    style={{marginRight:"3%"}}
+                                />
+                       
+                                <Button variant="primary" type="submit">
+                                    Enter
+                                </Button>
+                    
+                    </Form>
+                    {/* <form onSubmit={handleSubmit}>
                         <input
                             value={userMessage}
                             onChange={handleChange}
@@ -88,7 +114,7 @@ function Chatbot(props) {
                         >
                             Send
                         </button>
-                    </form>
+                    </form> */}
                 </div>
             </div>
             <br></br>

@@ -69,9 +69,10 @@ function Login(props) {
         return <Redirect to={{ pathname: redirectTo }} />;
     }
 
+   
     return (
         <div>
-            <p>Login Page</p>
+            <h3 className="my-3">Login</h3>
             {location.state && (
                 <FlashMessage flashMessage={location.state.flashMessage} />
             )}
