@@ -45,91 +45,91 @@ function App() {
         <Router>
             <NavigationBar user={user} setUser={setUser} />
             {user.loggedIn && <p>Join the party, {user.username}!</p>}
-            <Route
-                exact
-                path="/"
-                render={props => {
-                    return <Index user={user} />;
-                }}
-            />
-
-            {user.isLoggedIn ? (
-                <React.Fragment>
-                    <Route
-                        exact
-                        path="/dashboard"
-                        render={props => {
-                            return <Dashboard user={user} />;
-                        }}
-                    />
-                    <Route
-                    exact
-                    path="/chatbot"
-                    render={props => {
-                        return <Chatbot user={user} />;
-                    }}
-                />
+            <div className="mx-5">
                 <Route
                     exact
-                    path="/history"
+                    path="/"
                     render={props => {
-                        return <History user={user} />;
+                        return <Index user={user} />;
                     }}
                 />
-                </React.Fragment>
-            ) : // user not logged in
-                (
-            <React.Fragment>
+
+                {user.isLoggedIn ? (
+                    // user is logged in
+                    <React.Fragment>
+                        <Route
+                            exact
+                            path="/dashboard"
+                            render={props => {
+                                return <Dashboard user={user} />;
+                            }}
+                        />
+                        <Route
+                            exact
+                            path="/chatbot"
+                            render={props => {
+                                return <Chatbot user={user} />;
+                            }}
+                        />
+                        <Route
+                            exact
+                            path="/history"
+                            render={props => {
+                                return <History user={user} />;
+                            }}
+                        />
+                    </React.Fragment>
+                ) : (
+                    // user not logged in
+                    <React.Fragment>
+                        <Route
+                            exact
+                            path="/dashboard"
+                            render={props => {
+                                return <p>Not logged in</p>;
+                            }}
+                        />
+                        <Route
+                            exact
+                            path="/chatbot"
+                            render={props => {
+                                return <p>Not logged in</p>;
+                            }}
+                        />
+                        <Route
+                            exact
+                            path="/history"
+                            render={props => {
+                                return <p>Not logged in</p>;
+                            }}
+                        />
+                    </React.Fragment>
+                )}
+
                 <Route
                     exact
-                    path="/dashboard"
+                    path="/login"
                     render={props => {
-                        return <p>Not logged in</p>;
+                        return <Login setUser={setUser} />;
                     }}
                 />
+
                 <Route
                     exact
-                    path="/chatbot"
+                    path="/register"
                     render={props => {
-                        return <p>Not logged in</p>;
+                        return <Register />;
                     }}
                 />
+
                 <Route
                     exact
-                    path="/history"
+                    path="/serverError"
                     render={props => {
-                        return <p>Not logged in</p>;
+                        return <ServerError />;
                     }}
                 />
-
-            </React.Fragment>
-            )}
-
-         
-
-            <Route
-                exact
-                path="/login"
-                render={props => {
-                    return <Login setUser={setUser} />;
-                }}
-            />
-
-            <Route
-                exact
-                path="/register"
-                render={props => {
-                    return <Register />;
-                }}
-            />
-
-            <Route
-                exact
-                path="/serverError"
-                render={props => {
-                    return <ServerError />;
-                }}
-            />
+            </div>
         </Router>
     );
 }

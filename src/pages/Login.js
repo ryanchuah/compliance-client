@@ -3,18 +3,17 @@ import axios from "axios";
 import { Redirect, useLocation } from "react-router-dom";
 import FormErrors from "../components/FormErrors";
 import FlashMessage from "../components/FlashMessage";
+import { Form, Button } from "react-bootstrap"
 
 function Login(props) {
-    const [formValues, setFormValues] = useState({email:"", password:""})
+    const [formValues, setFormValues] = useState({ email: "", password: "" });
     const [redirectTo, setRedirectTo] = useState("");
     const [formErrors, setFormErrors] = useState([]);
     const location = useLocation();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        if (!validateForm()) {
-            return;
-        }
+        if (!validateForm()) return;
         try {
             const response = await axios.post("/user/login", formValues);
 
@@ -64,7 +63,7 @@ function Login(props) {
             ...formValues,
             [e.target.name]: e.target.value
         });
-    }
+    };
 
     if (redirectTo) {
         return <Redirect to={{ pathname: redirectTo }} />;
@@ -73,31 +72,29 @@ function Login(props) {
     return (
         <div>
             <p>Login Page</p>
-            {location.state && <FlashMessage flashMessage={location.state.flashMessage} />}
+            {location.state && (
+                <FlashMessage flashMessage={location.state.flashMessage} />
+            )}
             <FormErrors formErrors={formErrors} />
-            <form onSubmit={handleSubmit} method="post">
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="text"
-                        name="email"
-                        value={formValues.email}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={formValues.password}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <input type="submit" value="Login" />
-                </div>
-            </form>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control name="email" type="email" placeholder="Enter email" value={formValues.email}
+                        onChange={handleChange} /> 
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control name="password" type="password" placeholder="Password" value={formValues.password}
+                        onChange={handleChange} />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Login
+                </Button>
+            </Form>
         </div>
     );
 }

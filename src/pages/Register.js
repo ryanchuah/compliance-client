@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import FormErrors from "../components/FormErrors";
+import { Form, Button, Col } from "react-bootstrap";
 
 function Register(props) {
     const [redirect, setRedirect] = useState("");
-    const [formValues, setFormValues] = useState({name:"",email:"",password:""});
+    const [formValues, setFormValues] = useState({
+        name: "",
+        email: "",
+        password: ""
+    });
     const [formErrors, setFormErrors] = useState([]);
 
     const handleSubmit = async e => {
@@ -44,6 +49,10 @@ function Register(props) {
             errors.push("Please enter your password");
         }
 
+        if (formValues.passwordReenter !== formValues.password) {
+            errors.push("Your passwords do not match");
+        }
+
         if (errors.length > 0) {
             setFormErrors(errors);
             return false;
@@ -73,39 +82,59 @@ function Register(props) {
         <div>
             <p>Register Page</p>
             <FormErrors formErrors={formErrors} />
-
-            <form onSubmit={handleSubmit} method="post">
-                <div>
-                    <label>Name:</label>
-                    <input
-                        type="text"
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formBasicName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
                         name="name"
+                        type="text"
+                        placeholder="Enter name"
                         value={formValues.name}
                         onChange={handleChange}
                     />
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="text"
+                </Form.Group>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
                         name="email"
-                        value={formValues.username}
+                        type="email"
+                        placeholder="Enter email"
+                        value={formValues.email}
                         onChange={handleChange}
                     />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        value={formValues.password}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <input type="submit" value="Register" />
-                </div>
-            </form>
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
+
+                <Form.Group>
+                    <Form.Row>
+                        <Col>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control
+                                name="password"
+                                type="password"
+                                placeholder="Password"
+                                value={formValues.password}
+                                onChange={handleChange}
+                            />
+                        </Col>
+                        <Col>
+                            <Form.Label>Re-enter Password</Form.Label>
+                            <Form.Control
+                                name="passwordReenter"
+                                type="password"
+                                placeholder="Re-enter password"
+                                value={formValues.passwordReenter}
+                                onChange={handleChange}
+                            />
+                        </Col>
+                    </Form.Row>
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Register
+                </Button>
+            </Form>
         </div>
     );
 }
