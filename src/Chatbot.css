@@ -14,30 +14,18 @@ h1 {
 
 .chat-window {
     width: 75vw;
-    height: 75%;
+    height: 75vh;
     margin: auto;
     border: 1px solid #d5d5d5;
     background-color: gray;
 }
 
-/* .conversation-view {
-    width: 100%;
-    min-height: 600px;
-    padding: 20px 40px;
-    background-color: #fdfcfb;
-} */
-
 .conversationHistory-view {
     width: 100%;
-    min-height: 300px;
-    height: 25%;
+    height: 80%;
     padding: 20px 40px;
     background-color: #fdfcfb;
-}
-
-.message-box {
-    width: 100%;
-    background-color: rgb(133, 133, 133);
+    overflow-y: scroll;
 
 }
 
