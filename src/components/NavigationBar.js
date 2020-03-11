@@ -32,6 +32,9 @@ function NavigationBar(props) {
                     {!props.user.isLoggedIn && (
                         <Nav.Link href="/login">Login</Nav.Link>
                     )}
+                    {!props.user.isLoggedIn && (
+                        <Nav.Link href="/visitor">Visitor</Nav.Link>
+                    )}
                     {props.user.isLoggedIn && (
                         <Nav.Link onClick={logout}>Logout</Nav.Link>
                     )}

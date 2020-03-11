@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../Chatbot.css";
-import { Form, Button } from "react-bootstrap";
-import { animateScroll } from "react-scroll";
-import "../App";
+import { useEffect } from "react";
+import {Form, Col, Button} from "react-bootstrap"
 
-function Chatbot() {
+function Visitor(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
-
-    useEffect(()=>{
-        scrollToBottom()
-    },[conversationHistory[conversationHistory.length-1]])
 
     const handleChange = event => {
         setUserMessage(event.target.value);
@@ -23,24 +18,10 @@ function Chatbot() {
             return
         };
 
-        if (window.refreshChatbot) {
-            window.refreshChatbot = false;
-
-            fetch("/api/saveTimePoint", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: "{}",
-                    sessionID: "ryan"
-                })
-            });
-        }
-
         var msg = {
             text: userMessage,
             user: "human"
         };
-        setUserMessage("");
 
         setConversationHistory(conversationHistory => [
             ...conversationHistory,
@@ -52,7 +33,7 @@ function Chatbot() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 message: userMessage,
-                sessionID: "ryan"
+                sessionID: "visitor"
             })
         });
 
@@ -68,6 +49,8 @@ function Chatbot() {
             ...conversationHistory,
             msg
         ]);
+
+        setUserMessage("");
     };
 
     const ChatBubble = (text, i, className) => {
@@ -86,44 +69,57 @@ function Chatbot() {
         ChatBubble(e.text, index, e.user)
     );
 
-    function scrollToBottom() {
-        animateScroll.scrollToBottom({
-            containerId: "chat-container"
-        });
-    }
-
     const formStyle = {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: "1vh 10%",
-        height: "20%"
-    };
+
+    }
 
     return (
         <div style={{ maxHeight: "100vh" }}>
-            <h1>Compliance Expert, your friendly assistant</h1>
+            <h1>Visitor</h1>
             <div className="chat-window">
                 <div className="conversationHistory-view">{chat}</div>
                 <div className="message-box">
-                <Form onSubmit={handleSubmit} style={formStyle}>
-                    <Form.Control
-                        type="text"
-                        placeholder="Type here..."
-                        value={userMessage}
-                        onChange={handleChange}
-                        style={{ marginRight: "3%" }}
-                    />
+                    <Form onSubmit={handleSubmit} style={formStyle}>
 
-                    <Button variant="primary" type="submit">
-                        Enter
-                    </Button>
-                </Form>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Type here..."
+                                    value={userMessage}
+                                    onChange={handleChange}
+                                    style={{marginRight:"3%"}}
+                                />
+                       
+                                <Button variant="primary" type="submit">
+                                    Enter
+                                </Button>
+                    
+                    </Form>
+                    {/* <form onSubmit={handleSubmit}>
+                        <input
+                            value={userMessage}
+                            onChange={handleChange}
+                            className="text-input"
+                            type="text"
+                            autoFocus
+                            placeholder="Type your message and hit Enter to send"
+                        />
+                        <button
+                            type="button"
+                            className="send-button"
+                            onClick={handleSubmit}
+                        >
+                            Send
+                        </button>
+                    </form> */}
+                </div>
             </div>
+            <br></br>
         </div>
-        <br></br>
-    </div>
     );
 }
 
-export default Chatbot;
+export default Visitor;
