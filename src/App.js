@@ -11,6 +11,8 @@ import Chatbot from "./pages/Chatbot";
 import axios from "axios";
 import History from "./pages/History"
 
+var refreshChatbot = false;
+
 function App() {
     const [user, setUser] = useState({ isLoggedIn: false, username: null });
 
@@ -68,6 +70,7 @@ function App() {
                             exact
                             path="/chatbot"
                             render={props => {
+                                window.refreshChatbot = true;
                                 return <Chatbot user={user} />;
                             }}
                         />
