@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
+import Visitor from "./pages/Visitor";
 import Register from "./pages/Register";
 import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
@@ -114,6 +115,14 @@ function App() {
                     path="/login"
                     render={props => {
                         return <Login setUser={setUser} />;
+                    }}
+                />
+
+                <Route
+                    exact
+                    path="/visitor"
+                    render={props => {
+                        return <Visitor />;
                     }}
                 />
 
