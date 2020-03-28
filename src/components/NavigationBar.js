@@ -47,6 +47,9 @@ function NavigationBar(props) {
                     {props.user.isLoggedIn && (
                         <Nav.Link href="/history">History</Nav.Link>
                     )}
+                    {props.user.isLoggedIn && (
+                        <Nav.Link href="/suggestions">Suggestions</Nav.Link>
+                    )}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

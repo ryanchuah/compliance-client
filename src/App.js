@@ -11,6 +11,7 @@ import ServerError from "./pages/ServerError";
 import Chatbot from "./pages/Chatbot";
 import axios from "axios";
 import History from "./pages/History"
+import Suggestions from "./pages/Suggestions"
 
 var refreshChatbot = false;
 
@@ -82,6 +83,13 @@ function App() {
                                 return <History user={user} />;
                             }}
                         />
+                        <Route
+                            exact
+                            path="/suggestions"
+                            render={props => {
+                                return <Suggestions user={user} />;
+                            }}
+                        />
                     </React.Fragment>
                 ) : (
                     // user not logged in
@@ -105,6 +113,20 @@ function App() {
                             path="/history"
                             render={props => {
                                 return <p>Not logged in</p>;
+                            }}
+                        />
+                        {/* <Route
+                            exact
+                            path="/suggestions"
+                            render={props => {
+                                return <p>Not logged in</p>;
+                            }}
+                        /> */}
+                        <Route
+                            exact
+                            path="/suggestions"
+                            render={props => {
+                                return <Suggestions user={user} />;
                             }}
                         />
                     </React.Fragment>
