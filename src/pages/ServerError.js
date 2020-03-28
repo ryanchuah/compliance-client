@@ -2,7 +2,7 @@ import React from "react"
 
 function ServerError(){
     return (
-        <h1>An internal server occurred</h1>
+        <h1>500 An internal server occurred</h1>
     )
 }
 

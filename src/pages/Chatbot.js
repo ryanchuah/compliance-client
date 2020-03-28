@@ -104,7 +104,7 @@ function Chatbot() {
         <div style={{ maxHeight: "100vh" }}>
             <h1>Compliance Expert, your friendly assistant</h1>
             <div className="chat-window">
-                <div className="conversationHistory-view">{chat}</div>
+                <div className="conversationHistory-view" id="chat-container">{chat}</div>
                 <div className="message-box">
                 <Form onSubmit={handleSubmit} style={formStyle}>
                     <Form.Control
