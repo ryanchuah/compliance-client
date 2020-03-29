@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import { Navbar, Nav } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 function NavigationBar(props) {
+    const history = useHistory();
     const logout = event => {
         event.preventDefault();
         axios
@@ -14,6 +16,7 @@ function NavigationBar(props) {
                         loggedIn: false,
                         username: null
                     });
+                    history.push("/login")
                 }
             })
             .catch(error => {
@@ -21,35 +24,33 @@ function NavigationBar(props) {
                 console.log(error);
             });
     };
+
+    if (props.user.isLoggedIn) {
+        var activeLinks = (
+            <React.Fragment>
+                <Nav.Link onClick={logout}>Logout</Nav.Link>
+                <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+                <Nav.Link href="/chatbot">Chatbot</Nav.Link>
+                <Nav.Link href="/history">History</Nav.Link>
+                <Nav.Link href="/suggestions">Suggestions</Nav.Link>
+            </React.Fragment>
+        );
+    } else {
+        var activeLinks = (
+            <React.Fragment>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/register">Register</Nav.Link>
+                <Nav.Link href="/visitor">Visitor</Nav.Link>
+            </React.Fragment>
+        );
+    }
     return (
         <Navbar bg="light" expand="lg">
             <Navbar.Brand href="#home">UCL Team 39</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/register">Register</Nav.Link>
-                    {!props.user.isLoggedIn && (
-                        <Nav.Link href="/login">Login</Nav.Link>
-                    )}
-                    {!props.user.isLoggedIn && (
-                        <Nav.Link href="/visitor">Visitor</Nav.Link>
-                    )}
-                    {props.user.isLoggedIn && (
-                        <Nav.Link onClick={logout}>Logout</Nav.Link>
-                    )}
-                    {props.user.isLoggedIn && (
-                        <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-                    )}
-                    {props.user.isLoggedIn && (
-                        <Nav.Link href="/chatbot">Chatbot</Nav.Link>
-                    )}
-                    {props.user.isLoggedIn && (
-                        <Nav.Link href="/history">History</Nav.Link>
-                    )}
-                    {props.user.isLoggedIn && (
-                        <Nav.Link href="/suggestions">Suggestions</Nav.Link>
-                    )}
+                    {activeLinks}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

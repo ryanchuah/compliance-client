@@ -31,9 +31,9 @@ function Login(props) {
             }
         } catch (err) {
             console.log("login error");
-            console.log(err.response);
+            console.log(err);
 
-            if (err.response.status === 401) {
+            if (err.response && err.response.status === 401) {
                 // Incorrect email password pair
                 setFormErrors(["Incorrect email or password"]);
             } else {
