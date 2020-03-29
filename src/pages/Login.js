@@ -72,6 +72,7 @@ function Login(props) {
    
     return (
         <div>
+            <h1 className="mt-3">Speeding up MHRA, NICE, and NHSD Software Compliance</h1>
             <h3 className="my-3">Login</h3>
             {location.state && (
                 <FlashMessage flashMessage={location.state.flashMessage} />

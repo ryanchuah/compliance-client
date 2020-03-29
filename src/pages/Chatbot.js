@@ -8,9 +8,9 @@ function Chatbot() {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
 
-    useEffect(()=>{
-        scrollToBottom()
-    },[conversationHistory[conversationHistory.length-1]])
+    useEffect(() => {
+        scrollToBottom();
+    }, [conversationHistory[conversationHistory.length - 1]]);
 
     const handleChange = event => {
         setUserMessage(event.target.value);
@@ -20,8 +20,8 @@ function Chatbot() {
         // preventing a default browser reloading
         event.preventDefault();
         if (!userMessage.trim()) {
-            return
-        };
+            return;
+        }
 
         if (window.refreshChatbot) {
             window.refreshChatbot = false;
@@ -92,21 +92,14 @@ function Chatbot() {
         });
     }
 
-    const formStyle = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "1vh 10%",
-        height: "20%"
-    };
-
     return (
         <div style={{ maxHeight: "100vh" }}>
-            <h1>Compliance Expert, your friendly assistant</h1>
+            <h1>Start by saying hi!</h1>
             <div className="chat-window">
-                <div className="conversationHistory-view" id="chat-container">{chat}</div>
-                <div className="message-box">
-                <Form onSubmit={handleSubmit} style={formStyle}>
+                <div className="conversationHistory-view" id="chat-container">
+                    {chat}
+                </div>
+                <Form onSubmit={handleSubmit} className="message-box">
                     <Form.Control
                         type="text"
                         placeholder="Type here..."
@@ -121,8 +114,6 @@ function Chatbot() {
                 </Form>
             </div>
         </div>
-        <br></br>
-    </div>
     );
 }
 

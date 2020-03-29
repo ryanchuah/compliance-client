@@ -24,8 +24,16 @@ function NavigationBar(props) {
                 console.log(error);
             });
     };
-
-    if (props.user.isLoggedIn) {
+    if(props.user.isLoggedIn === undefined){
+        var activeLinks = (
+            <React.Fragment>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/register">Register</Nav.Link>
+                <Nav.Link href="/visitor">Visitor</Nav.Link>
+            </React.Fragment>
+        );
+    }
+    else if (props.user.isLoggedIn) {
         var activeLinks = (
             <React.Fragment>
                 <Nav.Link onClick={logout}>Logout</Nav.Link>
