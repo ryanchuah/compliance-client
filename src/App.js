@@ -12,10 +12,8 @@ import axios from "axios";
 import History from "./pages/History";
 import Suggestions from "./pages/Suggestions";
 
-var refreshChatbot = false;
-
 function App() {
-    const [user, setUser] = useState({ isLoggedIn: undefined, username: null });
+    const [user, setUser] = useState({ isLoggedIn: undefined, user: null, sessionID: null });
 
     useEffect(() => {
         getUser();
@@ -33,13 +31,15 @@ function App() {
 
                 setUser({
                     isLoggedIn: true,
-                    username: response.data.user
+                    user: response.data.user,
+                    sessionID: response.data.sessionID
                 });
             } else {
                 console.log("Get user: no user");
                 setUser({
                     isLoggedIn: false,
-                    username: null
+                    user: null,
+                    sessionID: null
                 });
             }
         });

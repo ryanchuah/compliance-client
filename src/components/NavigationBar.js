@@ -14,7 +14,8 @@ function NavigationBar(props) {
                 if (response.status === 200) {
                     props.setUser({
                         loggedIn: false,
-                        username: null
+                        user: null,
+                        sessionID: null
                     });
                     history.push("/login")
                 }

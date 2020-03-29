@@ -18,11 +18,13 @@ function Login(props) {
             const response = await axios.post("/user/login", formValues);
 
             if (response.status === 200) {
-                console.log("logged in");
-
+                console.log("logged in: ");
+                console.log(response);
+                
                 props.setUser({
                     isLoggedIn: true,
-                    email: response.data.email
+                    user: response.data.user,
+                    sessionID: response.data.sessionID
                 });
                 setRedirectTo("/dashboard");
             } else {

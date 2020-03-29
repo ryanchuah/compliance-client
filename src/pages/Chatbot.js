@@ -4,10 +4,10 @@ import { Form, Button } from "react-bootstrap";
 import { animateScroll } from "react-scroll";
 import "../App";
 
-function Chatbot() {
+function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
-
+    
     useEffect(() => {
         scrollToBottom();
     }, [conversationHistory[conversationHistory.length - 1]]);
@@ -31,7 +31,7 @@ function Chatbot() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     message: "{}",
-                    sessionID: "ryan"
+                    sessionID: props.user.sessionID
                 })
             });
         }
@@ -52,7 +52,7 @@ function Chatbot() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 message: userMessage,
-                sessionID: "ryan"
+                sessionID: props.user.sessionID
             })
         });
 
