@@ -10,13 +10,13 @@ import Dashboard from "./pages/Dashboard";
 import ServerError from "./pages/ServerError";
 import Chatbot from "./pages/Chatbot";
 import axios from "axios";
-import History from "./pages/History"
-import Suggestions from "./pages/Suggestions"
+import History from "./pages/History";
+import Suggestions from "./pages/Suggestions";
 
 var refreshChatbot = false;
 
 function App() {
-    const [user, setUser] = useState({ isLoggedIn: false, username: null });
+    const [user, setUser] = useState({ isLoggedIn: undefined, username: null });
 
     useEffect(() => {
         getUser();
@@ -45,6 +45,116 @@ function App() {
             }
         });
     }
+
+    if (user.isLoggedIn === undefined) {
+        var activeRoutes = (
+            <React.Fragment>
+                <Route
+                    exact
+                    path="/dashboard"
+                    render={props => {
+                        return <p>Loading...</p>;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        window.refreshChatbot = true;
+                        return <p>Loading...</p>;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/history"
+                    render={props => {
+                        return <p>Loading...</p>;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/suggestions"
+                    render={props => {
+                        return <p>Loading...</p>;
+                    }}
+                />
+            </React.Fragment>
+        );
+    } else if (user.isLoggedIn) {
+        var activeRoutes = (
+            <React.Fragment>
+                <Route
+                    exact
+                    path="/dashboard"
+                    render={props => {
+                        return <Dashboard user={user} />;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        window.refreshChatbot = true;
+                        return <Chatbot user={user} />;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/history"
+                    render={props => {
+                        return <History user={user} />;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/suggestions"
+                    render={props => {
+                        return <Suggestions user={user} />;
+                    }}
+                />
+            </React.Fragment>
+        );
+    } else {
+        var activeRoutes = (
+            <React.Fragment>
+                <Route
+                    exact
+                    path="/dashboard"
+                    render={props => {
+                        return <p>Not logged in</p>;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        return <p>Not logged in</p>;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/history"
+                    render={props => {
+                        return <p>Not logged in</p>;
+                    }}
+                />
+                {/* <Route
+            exact
+            path="/suggestions"
+            render={props => {
+                return <p>Not logged in</p>;
+            }}
+        /> */}
+                <Route
+                    exact
+                    path="/suggestions"
+                    render={props => {
+                        return <Suggestions user={user} />;
+                    }}
+                />
+            </React.Fragment>
+        );
+    }
     return (
         <Router>
             <NavigationBar user={user} setUser={setUser} />
@@ -58,79 +168,7 @@ function App() {
                     }}
                 />
 
-                {user.isLoggedIn ? (
-                    // user is logged in
-                    <React.Fragment>
-                        <Route
-                            exact
-                            path="/dashboard"
-                            render={props => {
-                                return <Dashboard user={user} />;
-                            }}
-                        />
-                        <Route
-                            exact
-                            path="/chatbot"
-                            render={props => {
-                                window.refreshChatbot = true;
-                                return <Chatbot user={user} />;
-                            }}
-                        />
-                        <Route
-                            exact
-                            path="/history"
-                            render={props => {
-                                return <History user={user} />;
-                            }}
-                        />
-                        <Route
-                            exact
-                            path="/suggestions"
-                            render={props => {
-                                return <Suggestions user={user} />;
-                            }}
-                        />
-                    </React.Fragment>
-                ) : (
-                    // user not logged in
-                    <React.Fragment>
-                        <Route
-                            exact
-                            path="/dashboard"
-                            render={props => {
-                                return <p>Not logged in</p>;
-                            }}
-                        />
-                        <Route
-                            exact
-                            path="/chatbot"
-                            render={props => {
-                                return <p>Not logged in</p>;
-                            }}
-                        />
-                        <Route
-                            exact
-                            path="/history"
-                            render={props => {
-                                return <p>Not logged in</p>;
-                            }}
-                        />
-                        {/* <Route
-                            exact
-                            path="/suggestions"
-                            render={props => {
-                                return <p>Not logged in</p>;
-                            }}
-                        /> */}
-                        <Route
-                            exact
-                            path="/suggestions"
-                            render={props => {
-                                return <Suggestions user={user} />;
-                            }}
-                        />
-                    </React.Fragment>
-                )}
+                {activeRoutes}
 
                 <Route
                     exact
