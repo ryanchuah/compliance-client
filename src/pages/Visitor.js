@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "../Chatbot.css";
-import { useEffect } from "react";
 import {Form, Col, Button} from "react-bootstrap"
+import { v4 as uuidv4 } from 'uuid';
 
 function Visitor(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
-
+    if (!localStorage.getItem("sessionID")){
+        localStorage.setItem("sessionID", uuidv4())
+    } 
+    var sessionID = localStorage.getItem("sessionID")
     const handleChange = event => {
         setUserMessage(event.target.value);
     };
@@ -33,7 +36,7 @@ function Visitor(props) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 message: userMessage,
-                sessionID: "visitor"
+                sessionID
             })
         });
 
