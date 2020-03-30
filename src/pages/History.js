@@ -1,31 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-function genHistoryTable(records) {
-    var html = "<table border=1><tbody>";
-
-    for(var i = records.length - 1; i >= 0; --i) {
-        var record = records[i];
-
-        html += "<tr><td colSpan=2><b>"
-        html += record.split('|')[0];
-        html += "</b></td></tr>";
-
-        html += "<tr><td colSpan=2><pre>"
-        html += record.split('|')[1];
-        html += "</pre></td></tr>";
-    }
-
-    html += "</tbody></table>";
-
-    document.getElementById("container").innerHTML = html;
-}
+import { v4 as uuidv4 } from "uuid";
 
 function History(props) {
     const [user, setUser] = useState({});
-    const [conversationHistory, setConversationHistory] = useState([])
+    const [conversationHistory, setConversationHistory] = useState([]);
 
     useEffect(() => {
+        console.log(999, props.user);
+
         setUser(props.user);
     }, [props.user.isLoggedIn]);
 
@@ -33,32 +16,42 @@ function History(props) {
         const fetchHistory = async () => {
             const history = await axios.get("/api/userData/history");
             setConversationHistory(history.data);
-
-            var records = [];
-
-            history.data.map(s =>
-            {
-                if(s.length > 2 && '*' === s[0] && '*' === s[1])
-                {
-                    s = s.substring(2);
-                    s = s + "|";
-
-                    records.push(s);
-                }
-                else if(records.length > 0)
-                {
-                    s = s + "\n";
-                    records[records.length - 1] += s;
-                }
-            })
-
-            genHistoryTable(records);
-        }
-        fetchHistory()
-    }, [conversationHistory.length])
+        };
+        fetchHistory();
+    }, [conversationHistory.length]);
+    var prevMessageTime = "";
 
     return (
-        <div id="container">
+        <div>
+            <h2>Compliance Bot Conversation History</h2>
+            {conversationHistory.map((_, i) => {
+                if (i % 3 == 0) {
+                    const messageTime = conversationHistory[i];
+                    const messageDate = messageTime.substring(0, 10);
+                    const messageHoursMinutes = messageTime.substring(11, 16);
+                    if (messageDate + messageHoursMinutes !== prevMessageTime) {
+                        prevMessageTime = messageDate + messageHoursMinutes;
+                        return (
+                            <h4 key={uuidv4()}>
+                                {messageDate + " " + messageHoursMinutes}
+                            </h4>
+                        );
+                    }
+                } else if (i % 2 == 0) {
+                    return (
+                        <p key={uuidv4()}>
+                            <b>{props.user.userData.name}:</b>{" "}
+                            {conversationHistory[i]}
+                        </p>
+                    );
+                } else {
+                    return (
+                        <p key={uuidv4()}>
+                            <b>Bot:</b> {conversationHistory[i]}
+                        </p>
+                    );
+                }
+            })}
         </div>
     );
 }
