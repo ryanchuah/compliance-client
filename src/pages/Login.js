@@ -24,7 +24,7 @@ function Login(props) {
                 
                 props.setUser({
                     isLoggedIn: true,
-                    user: response.data.user,
+                    userData: response.data.user,
                     sessionID: response.data.sessionID
                 });
                 history.push("/dashboard")

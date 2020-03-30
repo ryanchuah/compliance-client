@@ -5,7 +5,7 @@ function Dashboard(props) {
 
     useEffect(() => setUser(props.user), [props.user])
 
-    return <div>{<p>Welcome {user.username}</p>}</div>;
+    return <div>{<p>Welcome {props.user.userData.name}</p>}</div>;
 }
 
 export default Dashboard;
