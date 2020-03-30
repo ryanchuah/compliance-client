@@ -19,7 +19,7 @@ function Chatbot(props) {
         }
         var sessionID = localStorage.getItem("sessionID");
     }
-    
+
     useEffect(() => {
         scrollToBottom();
     }, [conversationHistory[conversationHistory.length - 1]]);
@@ -33,19 +33,6 @@ function Chatbot(props) {
         event.preventDefault();
         if (!userMessage.trim()) {
             return;
-        }
-
-        if (window.refreshChatbot) {
-            window.refreshChatbot = false;
-
-            fetch("/api/saveTimePoint", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: "{}",
-                    sessionID
-                })
-            });
         }
 
         var msg = {
