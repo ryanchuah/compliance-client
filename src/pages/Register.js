@@ -9,7 +9,8 @@ function Register(props) {
     const [formValues, setFormValues] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        passwordReenter: ""
     });
     const [formErrors, setFormErrors] = useState([]);
 
@@ -78,6 +79,15 @@ function Register(props) {
         );
     }
 
+    function titleCase(str){
+        const words = str.split(" ")
+        const result = []
+        for (const word of words){
+          result.push(word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        }    
+        return result.join(" ")   
+      }
+
     return (
         <div>
             <h3 className="my-3">Register</h3>
@@ -90,7 +100,7 @@ function Register(props) {
                         name="name"
                         type="text"
                         placeholder="Enter name"
-                        value={formValues.name}
+                        value={titleCase(formValues.name)}
                         onChange={handleChange}
                     />
                 </Form.Group>
