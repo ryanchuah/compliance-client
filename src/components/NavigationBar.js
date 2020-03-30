@@ -30,18 +30,18 @@ function NavigationBar(props) {
             <React.Fragment>
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/register">Register</Nav.Link>
-                <Nav.Link href="/visitor">Visitor</Nav.Link>
+                <Nav.Link href="/chatbot">Chatbot</Nav.Link>
             </React.Fragment>
         );
     }
     else if (props.user.isLoggedIn) {
         var activeLinks = (
             <React.Fragment>
-                <Nav.Link onClick={logout}>Logout</Nav.Link>
                 <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                 <Nav.Link href="/chatbot">Chatbot</Nav.Link>
                 <Nav.Link href="/history">History</Nav.Link>
                 <Nav.Link href="/suggestions">Suggestions</Nav.Link>
+                <Nav.Link onClick={logout}>Logout</Nav.Link>
             </React.Fragment>
         );
     } else {
@@ -49,7 +49,7 @@ function NavigationBar(props) {
             <React.Fragment>
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/register">Register</Nav.Link>
-                <Nav.Link href="/visitor">Visitor</Nav.Link>
+                <Nav.Link href="/chatbot">Chatbot</Nav.Link>
             </React.Fragment>
         );
     }

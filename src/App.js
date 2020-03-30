@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Visitor from "./pages/Visitor";
 import Register from "./pages/Register";
 import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
@@ -79,14 +78,6 @@ function App() {
                 />
                 <Route
                     exact
-                    path="/chatbot"
-                    render={props => {
-                        window.refreshChatbot = true;
-                        return <Chatbot user={user} />;
-                    }}
-                />
-                <Route
-                    exact
                     path="/history"
                     render={props => {
                         return <History user={user} />;
@@ -120,13 +111,6 @@ function App() {
                 />
                 <Route
                     exact
-                    path="/chatbot"
-                    render={props => {
-                        return <p>Not logged in</p>;
-                    }}
-                />
-                <Route
-                    exact
                     path="/history"
                     render={props => {
                         return <p>Not logged in</p>;
@@ -148,14 +132,6 @@ function App() {
                 />
                 <Route
                     exact
-                    path="/visitor"
-                    render={props => {
-                        return <Visitor />;
-                    }}
-                />
-
-                <Route
-                    exact
                     path="/register"
                     render={props => {
                         return <Register />;
@@ -171,6 +147,14 @@ function App() {
             <div className="mx-5">
                 {activeRoutes}
 
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        window.refreshChatbot = true;
+                        return <Chatbot user={user} />;
+                    }}
+                />
                 <Route
                     exact
                     path="/serverError"

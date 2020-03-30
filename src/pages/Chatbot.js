@@ -3,10 +3,22 @@ import "../Chatbot.css";
 import { Form, Button } from "react-bootstrap";
 import { animateScroll } from "react-scroll";
 import "../App";
+import { v4 as uuidv4 } from "uuid";
 
 function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
+
+    if (props.user && props.user.sessionID) {
+        // user is logged in
+        var sessionID = props.user.sessionID;
+    } else {
+        //user is visitor
+        if (!localStorage.getItem("sessionID")) {
+            localStorage.setItem("sessionID", uuidv4());
+        }
+        var sessionID = localStorage.getItem("sessionID");
+    }
     
     useEffect(() => {
         scrollToBottom();
@@ -31,7 +43,7 @@ function Chatbot(props) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     message: "{}",
-                    sessionID: props.user.sessionID
+                    sessionID
                 })
             });
         }
@@ -52,7 +64,7 @@ function Chatbot(props) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 message: userMessage,
-                sessionID: props.user.sessionID
+                sessionID
             })
         });
 
