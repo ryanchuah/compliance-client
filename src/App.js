@@ -11,10 +11,14 @@ import Chatbot from "./pages/Chatbot";
 import axios from "axios";
 import History from "./pages/History";
 import Suggestions from "./pages/Suggestions";
-import LoadingScreen from "./pages/LoadingScreen"
+import LoadingScreen from "./pages/LoadingScreen";
 
 function App() {
-    const [user, setUser] = useState({ isLoggedIn: undefined, user: null, sessionID: null });
+    const [user, setUser] = useState({
+        isLoggedIn: undefined,
+        user: null,
+        sessionID: null
+    });
 
     useEffect(() => {
         getUser();
@@ -51,9 +55,14 @@ function App() {
             <React.Fragment>
                 <Route
                     exact
-                    path={["/dashboard","/chatbot","/history","/suggestions"]}
+                    path={[
+                        "/dashboard",
+                        "/chatbot",
+                        "/history",
+                        "/suggestions"
+                    ]}
                     render={props => {
-                        return <LoadingScreen/>;
+                        return <LoadingScreen />;
                     }}
                 />
             </React.Fragment>
@@ -63,7 +72,7 @@ function App() {
             <React.Fragment>
                 <Route
                     exact
-                    path="/dashboard"
+                    path={["/", "/dashboard"]}
                     render={props => {
                         return <Dashboard user={user} />;
                     }}
@@ -95,6 +104,13 @@ function App() {
     } else {
         var activeRoutes = (
             <React.Fragment>
+                <Route
+                    exact
+                    path={["/", "/login"]}
+                    render={props => {
+                        return <Login setUser={setUser} />;
+                    }}
+                />
                 <Route
                     exact
                     path="/dashboard"
@@ -130,32 +146,6 @@ function App() {
                         return <Suggestions user={user} />;
                     }}
                 />
-            </React.Fragment>
-        );
-    }
-    return (
-        <Router>
-            <NavigationBar user={user} setUser={setUser} />
-            {user.loggedIn && <p>Join the party, {user.username}!</p>}
-            <div className="mx-5">
-                <Route
-                    exact
-                    path="/"
-                    render={props => {
-                        return <Login setUser={setUser}/>;
-                    }}
-                />
-
-                {activeRoutes}
-
-                <Route
-                    exact
-                    path="/login"
-                    render={props => {
-                        return <Login setUser={setUser} />;
-                    }}
-                />
-
                 <Route
                     exact
                     path="/visitor"
@@ -171,6 +161,15 @@ function App() {
                         return <Register />;
                     }}
                 />
+            </React.Fragment>
+        );
+    }
+    return (
+        <Router>
+            <NavigationBar user={user} setUser={setUser} />
+            {user.loggedIn && <p>Join the party, {user.username}!</p>}
+            <div className="mx-5">
+                {activeRoutes}
 
                 <Route
                     exact

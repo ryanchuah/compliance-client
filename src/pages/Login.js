@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Redirect, useLocation } from "react-router-dom";
+import { Redirect, useLocation, useHistory } from "react-router-dom";
 import FormErrors from "../components/FormErrors";
 import FlashMessage from "../components/FlashMessage";
 import { Form, Button } from "react-bootstrap"
 
 function Login(props) {
     const [formValues, setFormValues] = useState({ email: "", password: "" });
-    const [redirectTo, setRedirectTo] = useState("");
     const [formErrors, setFormErrors] = useState([]);
     const location = useLocation();
+    const history = useHistory();
+
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -26,7 +27,7 @@ function Login(props) {
                     user: response.data.user,
                     sessionID: response.data.sessionID
                 });
-                setRedirectTo("/dashboard");
+                history.push("/dashboard")
             } else {
                 console.log("not logged in");
                 console.log(response.status);
@@ -39,7 +40,7 @@ function Login(props) {
                 // Incorrect email password pair
                 setFormErrors(["Incorrect email or password"]);
             } else {
-                setRedirectTo("/serverError");
+                history.push("/serverError");
             }
         }
     };
@@ -66,11 +67,6 @@ function Login(props) {
             [e.target.name]: e.target.value
         });
     };
-
-    if (redirectTo) {
-        return <Redirect to={{ pathname: redirectTo }} />;
-    }
-
    
     return (
         <div>
