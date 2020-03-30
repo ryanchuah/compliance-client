@@ -90,6 +90,14 @@ function App() {
                         return <Suggestions user={user} />;
                     }}
                 />
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        window.refreshChatbot = true;
+                        return <Chatbot user={user} />;
+                    }}
+                />
             </React.Fragment>
         );
     } else {
@@ -100,6 +108,14 @@ function App() {
                     path={["/", "/login"]}
                     render={props => {
                         return <Login setUser={setUser} />;
+                    }}
+                />
+                <Route
+                    exact
+                    path="/chatbot"
+                    render={props => {
+                        window.refreshChatbot = true;
+                        return <Chatbot user={user} />;
                     }}
                 />
                 <Route
@@ -147,14 +163,7 @@ function App() {
             <div className="mx-5">
                 {activeRoutes}
 
-                <Route
-                    exact
-                    path="/chatbot"
-                    render={props => {
-                        window.refreshChatbot = true;
-                        return <Chatbot user={user} />;
-                    }}
-                />
+                
                 <Route
                     exact
                     path="/serverError"
