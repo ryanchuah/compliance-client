@@ -4,10 +4,42 @@ import { Form, Button } from "react-bootstrap";
 import { animateScroll } from "react-scroll";
 import "../App";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
+    useEffect(() => {
+        async function fetchHistory() {
+            const resultHistory = [];
+            var history = await axios.get("/api/userData/history");
+            history = history.data;
+            var n = 0;
+            for (let i = 0; i < history.length; i++) {
+                if (i !== 3 * n) {
+                    // ignore timestamps
+                    if (i == 3 * n + 1) {
+                        console.log("2: ", history[i]);
+
+                        var msg = {
+                            text: history[i],
+                            user: "human"
+                        };
+                        resultHistory.push(msg);
+                    } else {
+                        var msg = {
+                            text: history[i],
+                            user: "ai"
+                        };
+                        resultHistory.push(msg);
+                        n += 1;
+                    }
+                }
+            }
+            setConversationHistory(resultHistory);
+        }
+        fetchHistory();
+    }, [conversationHistory.length]);
 
     if (props.user && props.user.sessionID) {
         // user is logged in
