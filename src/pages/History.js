@@ -20,12 +20,12 @@ function History(props) {
         fetchHistory();
     }, [conversationHistory.length]);
     var prevMessageTime = "";
-
+    var n = 0;
     return (
         <div>
             <h2>Compliance Bot Conversation History</h2>
             {conversationHistory.map((_, i) => {
-                if (i % 3 == 0) {
+                if (i == 3 * n) {
                     const messageTime = conversationHistory[i];
                     const messageDate = messageTime.substring(0, 10);
                     const messageHoursMinutes = messageTime.substring(11, 16);
@@ -37,14 +37,15 @@ function History(props) {
                             </h4>
                         );
                     }
-                } else if (i % 2 == 0) {
+                } else if (i == 3 * n + 1) {
                     return (
                         <p key={uuidv4()}>
                             <b>{props.user.userData.name}:</b>{" "}
                             {conversationHistory[i]}
                         </p>
                     );
-                } else {
+                } else if (i == 3 * n + 2) {
+                    n += 1;
                     return (
                         <p key={uuidv4()}>
                             <b>Bot:</b> {conversationHistory[i]}
