@@ -17,6 +17,7 @@ function NavigationBar(props) {
                         user: null,
                         sessionID: null
                     });
+                    props.setUserIsLoading(true)
                     history.push("/login")
                 }
             })
