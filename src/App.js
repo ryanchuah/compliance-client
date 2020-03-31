@@ -18,38 +18,36 @@ function App() {
         user: null,
         sessionID: null
     });
+    const [userIsLoading, setUserIsLoading] = useState(true)
 
-    useEffect(() => {
-        getUser();
-        console.log("user is: ");
-        console.log(user);
-    }, [user.isLoggedIn]);
+    useEffect(()=>{
+        if (userIsLoading){
+            axios.get("/user/").then(response => {
+                if (response.data.user) {
+                    console.log(
+                        "Get User: There is a user saved in the server session: "
+                    );
+                    console.log(response.data.user);
+    
+                    setUser({
+                        isLoggedIn: true,
+                        userData: response.data.user,
+                        sessionID: response.data.sessionID
+                    });
+                } else {
+                    console.log("Get user: no user");
+                    setUser({
+                        isLoggedIn: false,
+                        user: null,
+                        sessionID: null
+                    });
+                }
+                setUserIsLoading(false)
+            });
+        }
+    }, [userIsLoading])
 
-    function getUser() {
-        axios.get("/user/").then(response => {
-            if (response.data.user) {
-                console.log(
-                    "Get User: There is a user saved in the server session: "
-                );
-                console.log(response.data.user);
-
-                setUser({
-                    isLoggedIn: true,
-                    userData: response.data.user,
-                    sessionID: response.data.sessionID
-                });
-            } else {
-                console.log("Get user: no user");
-                setUser({
-                    isLoggedIn: false,
-                    user: null,
-                    sessionID: null
-                });
-            }
-        });
-    }
-
-    if (user.isLoggedIn === undefined) {
+    if (userIsLoading) {
         var activeRoutes = (
             <React.Fragment>
                 <Route
@@ -71,23 +69,23 @@ function App() {
             <React.Fragment>
                 <Route
                     exact
-                    path={["/", "/dashboard"]}
+                    path={["/", "/dashboard", "/login", "/register"]}
                     render={props => {
-                        return <Dashboard user={user} />;
+                        return <Dashboard user={user} userIsLoading={userIsLoading}/>;
                     }}
                 />
                 <Route
                     exact
                     path="/history"
                     render={props => {
-                        return <History user={user} />;
+                        return <History user={user} userIsLoading={userIsLoading} />;
                     }}
                 />
                 <Route
                     exact
                     path="/suggestions"
                     render={props => {
-                        return <Suggestions user={user} />;
+                        return <Suggestions user={user} userIsLoading={userIsLoading} />;
                     }}
                 />
                 <Route
@@ -95,7 +93,7 @@ function App() {
                     path="/chatbot"
                     render={props => {
                         window.refreshChatbot = true;
-                        return <Chatbot user={user} />;
+                        return <Chatbot user={user} userIsLoading={userIsLoading} />;
                     }}
                 />
             </React.Fragment>
@@ -115,7 +113,7 @@ function App() {
                     path="/chatbot"
                     render={props => {
                         window.refreshChatbot = true;
-                        return <Chatbot user={user} />;
+                        return <Chatbot user={user} userIsLoading={userIsLoading} />;
                     }}
                 />
                 <Route
@@ -143,7 +141,7 @@ function App() {
                     exact
                     path="/suggestions"
                     render={props => {
-                        return <Suggestions user={user} />;
+                        return <Suggestions user={user} userIsLoading={userIsLoading} />;
                     }}
                 />
                 <Route
@@ -158,7 +156,7 @@ function App() {
     }
     return (
         <Router>
-            <NavigationBar user={user} setUser={setUser} />
+            <NavigationBar user={user} userIsLoading={userIsLoading} setUser={setUser} setUserIsLoading={setUserIsLoading}/>
             {user.loggedIn && <p>Join the party, {user.username}!</p>}
             <div className="mx-5">
                 {activeRoutes}
