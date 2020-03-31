@@ -3,14 +3,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 function History(props) {
-    const [user, setUser] = useState({});
     const [conversationHistory, setConversationHistory] = useState([]);
-
-    useEffect(() => {
-        console.log(999, props.user);
-
-        setUser(props.user);
-    }, [props.user.isLoggedIn]);
 
     useEffect(() => {
         const fetchHistory = async () => {
