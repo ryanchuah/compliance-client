@@ -5,10 +5,13 @@ import { animateScroll } from "react-scroll";
 import "../App";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import LoadingScreen from "./LoadingScreen"
 
 function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
+    const [historyIsLoading, setHistoryIsLoading] = useState(true)
+    
     useEffect(() => {
         async function fetchHistory() {
             const resultHistory = [];
@@ -37,9 +40,12 @@ function Chatbot(props) {
                 }
             }
             setConversationHistory(resultHistory);
+            setHistoryIsLoading(false)
         }
-        fetchHistory();
-    }, [conversationHistory.length]);
+        if (historyIsLoading){
+            fetchHistory();
+        }
+    }, [historyIsLoading]);
 
     if (props.user && props.user.sessionID) {
         // user is logged in
@@ -121,6 +127,10 @@ function Chatbot(props) {
         animateScroll.scrollToBottom({
             containerId: "chat-container"
         });
+    }
+
+    if (historyIsLoading){
+        return <LoadingScreen/>
     }
 
     return (
