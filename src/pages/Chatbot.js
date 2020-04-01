@@ -11,7 +11,7 @@ function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
     const [historyIsLoading, setHistoryIsLoading] = useState(true)
-    
+    const [isStartOfNewSession, setIsStartOfNewSession] = useState(true)
     useEffect(() => {
         async function fetchHistory() {
             const resultHistory = [];
@@ -41,6 +41,11 @@ function Chatbot(props) {
             }
             setConversationHistory(resultHistory);
             setHistoryIsLoading(false)
+        }
+        if (!(props.user && props.user.sessionID)){
+            // user is guest
+            setHistoryIsLoading(false)
+            return
         }
         if (historyIsLoading){
             fetchHistory();
@@ -89,9 +94,11 @@ function Chatbot(props) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 message: userMessage,
-                sessionID
+                sessionID,
+                isStartOfNewSession
             })
         });
+        setIsStartOfNewSession(false)
 
         const data = await response.json();
         console.log(data);
