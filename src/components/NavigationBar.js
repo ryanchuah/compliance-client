@@ -26,7 +26,7 @@ function NavigationBar(props) {
                 console.log(error);
             });
     };
-    if(props.user.isLoggedIn === undefined){
+    if(props.userIsLoading){
         var activeLinks = (
             <React.Fragment>
                 <Nav.Link href="/login">Login</Nav.Link>
@@ -50,13 +50,13 @@ function NavigationBar(props) {
             <React.Fragment>
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/register">Register</Nav.Link>
-                <Nav.Link href="/chatbot">Chatbot</Nav.Link>
+                <Nav.Link href="/chatbot">Guest Chatbot</Nav.Link>
             </React.Fragment>
         );
     }
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">UCL Team 39</Navbar.Brand>
+            <Navbar.Brand href="/">UCL Team 39</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">

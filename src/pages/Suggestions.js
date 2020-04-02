@@ -2,22 +2,27 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import LoadingScreen from "./LoadingScreen";
 
 function Suggestions(props) {
     const [suggestions, setSuggestions] = useState([]);
+    const [suggestionsIsLoading, setSuggestionsIsLoading] = useState(true);
 
     useEffect(() => {
         async function fetchUserSuggestionData() {
             const result = await axios.get("/api/userData/suggestionData");
             setSuggestions(result.data);
+            setSuggestionsIsLoading(false);
         }
         fetchUserSuggestionData();
     }, [suggestions.length]);
 
+    if (suggestionsIsLoading) return <LoadingScreen />;
+
     if (suggestions) {
         return (
             <div>
-                <h1>Suggestions</h1>
+                <h1 className="my-4">Suggestions</h1>
                 <Container>
                     <Row className="font-weight-bold">
                         <Col>Your situation</Col>
