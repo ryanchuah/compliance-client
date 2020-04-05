@@ -30,6 +30,21 @@ function OpenSource(props) {
                 <a href="https://www.mongodb.com/community/licensing">MongoDB</a>
             </h5>
             <br/>
+
+            <h5>
+                <a href="https://github.com/jaredhanson/passport/blob/master/LICENSE">Passport</a>
+            </h5>
+            <br/>
+
+            <h5>
+                <a href="https://github.com/nodemailer/nodemailer/blob/master/LICENSE">Nodemailer</a>
+            </h5>
+            <br/>
+
+            <h5>
+                <a href="https://github.com/shaneGirish/bcrypt-nodejs/blob/master/LICENSE">bcrypt-nodejs</a>
+            </h5>
+            <br/>
         </div>
     );
 }
