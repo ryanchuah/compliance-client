@@ -18,6 +18,10 @@ function Dashboard(props) {
                 will achieve compliance. More information can be viewed at our{" "}
                 <Link to="/disclaimer">Disclaimer</Link>
             </h5>
+            <h5 className="mt-5">
+                Libraries we used can be viewed at our{" "}
+                <Link to="/openSource">Open-source libraries</Link>
+            </h5>
         </div>
     );
 }
