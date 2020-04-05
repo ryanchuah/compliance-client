@@ -5,13 +5,13 @@ import { animateScroll } from "react-scroll";
 import "../App";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import LoadingScreen from "./LoadingScreen"
+import LoadingScreen from "./LoadingScreen";
 
 function Chatbot(props) {
     const [userMessage, setUserMessage] = useState("");
     const [conversationHistory, setConversationHistory] = useState([]);
-    const [historyIsLoading, setHistoryIsLoading] = useState(true)
-    const [isStartOfNewSession, setIsStartOfNewSession] = useState(true)
+    const [historyIsLoading, setHistoryIsLoading] = useState(true);
+    const [isStartOfNewSession, setIsStartOfNewSession] = useState(true);
     useEffect(() => {
         async function fetchHistory() {
             const resultHistory = [];
@@ -22,8 +22,6 @@ function Chatbot(props) {
                 if (i !== 3 * n) {
                     // ignore timestamps
                     if (i == 3 * n + 1) {
-                        console.log("2: ", history[i]);
-
                         var msg = {
                             text: history[i],
                             user: "human"
@@ -40,14 +38,15 @@ function Chatbot(props) {
                 }
             }
             setConversationHistory(resultHistory);
-            setHistoryIsLoading(false)
+            setHistoryIsLoading(false);
+            scrollToBottom(200);
         }
-        if (!(props.user && props.user.sessionID)){
+        if (!(props.user && props.user.sessionID)) {
             // user is guest
-            setHistoryIsLoading(false)
-            return
+            setHistoryIsLoading(false);
+            return;
         }
-        if (historyIsLoading){
+        if (historyIsLoading) {
             fetchHistory();
         }
     }, [historyIsLoading]);
@@ -64,7 +63,7 @@ function Chatbot(props) {
     }
 
     useEffect(() => {
-        scrollToBottom();
+        scrollToBottom(500);
     }, [conversationHistory[conversationHistory.length - 1]]);
 
     const handleChange = event => {
@@ -98,7 +97,7 @@ function Chatbot(props) {
                 isStartOfNewSession
             })
         });
-        setIsStartOfNewSession(false)
+        setIsStartOfNewSession(false);
 
         const data = await response.json();
         console.log(data);
@@ -130,14 +129,15 @@ function Chatbot(props) {
         ChatBubble(e.text, index, e.user)
     );
 
-    function scrollToBottom() {
+    function scrollToBottom(duration) {
         animateScroll.scrollToBottom({
-            containerId: "chat-container"
+            containerId: "chat-container",
+            duration: duration || null
         });
     }
 
-    if (historyIsLoading){
-        return <LoadingScreen/>
+    if (historyIsLoading) {
+        return <LoadingScreen />;
     }
 
     return (

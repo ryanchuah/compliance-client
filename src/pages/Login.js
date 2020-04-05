@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Redirect, useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import FormErrors from "../components/FormErrors";
 import FlashMessage from "../components/FlashMessage";
 import { Form, Button } from "react-bootstrap"
