@@ -4,6 +4,13 @@ function OpenSource(props) {
     return (
         <div>
             <h4 className="my-3">Libraries We Use</h4>
+            <h6 className="my-3">
+                The following sets forth attribution notices for third party software that may be 
+                contained in portions of our chatbot product. We thank the open source community 
+                for all of their contributions.
+            </h6>
+            <br/>
+            
             <h5>
                 <a href="https://github.com/facebook/react/blob/master/LICENSE">React</a>
             </h5>
