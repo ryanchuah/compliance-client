@@ -11,10 +11,12 @@ function Suggestions(props) {
     useEffect(() => {
         async function fetchUserSuggestionData() {
             const result = await axios.get("/api/userData/suggestionData");
-            setSuggestions(result.data);
             setSuggestionsIsLoading(false);
+            setSuggestions(result.data);
         }
-        fetchUserSuggestionData();
+        if (suggestionsIsLoading){
+            fetchUserSuggestionData();
+        }
     }, [suggestions.length]);
 
     if (suggestionsIsLoading) return <LoadingScreen />;

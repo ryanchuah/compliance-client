@@ -9,10 +9,12 @@ function History(props) {
     useEffect(() => {
         const fetchHistory = async () => {
             const history = await axios.get("/api/userData/history");
-            setConversationHistory(history.data);
             setHistoryIsLoading(false);
+            setConversationHistory(history.data);
         };
-        fetchHistory();
+        if (historyIsLoading){
+            fetchHistory();
+        }
     }, [conversationHistory.length]);
 
     if (historyIsLoading) return <LoadingScreen />;

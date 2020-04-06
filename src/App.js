@@ -7,6 +7,7 @@ import NavigationBar from "./components/NavigationBar";
 import Dashboard from "./pages/Dashboard";
 import ServerError from "./pages/ServerError";
 import Disclaimer from "./pages/Disclaimer";
+import OpenSource from "./pages/OpenSource"
 import Chatbot from "./pages/Chatbot";
 import axios from "axios";
 import History from "./pages/History";
@@ -190,6 +191,7 @@ function App() {
             />
             <div className="mx-5">
                 {activeRoutes}
+                
                 <Route
                     exact
                     path="/disclaimer"
@@ -198,6 +200,14 @@ function App() {
                     }}
                 />
 
+                <Route
+                    exact
+                    path="/openSource"
+                    render={props => {
+                        return <OpenSource />;
+                    }}
+                />
+                
                 <Route
                     exact
                     path="/serverError"
