@@ -24,6 +24,7 @@ function Register(props) {
             const response = await axios.post("/user/register", formValues);
             console.log(response);
             if (response.status === 200) {
+                // successful signup
                 setRedirect({
                     pathname: "/login",
                     state: {
@@ -49,7 +50,6 @@ function Register(props) {
         if (formValues.password.length < 1) {
             errors.push("Please enter your password");
         }
-
         if (formValues.passwordReenter !== formValues.password) {
             errors.push("Your passwords do not match");
         }

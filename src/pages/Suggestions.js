@@ -30,12 +30,15 @@ function Suggestions(props) {
                         <Col>Resource</Col>
                     </Row>
 
-                    {suggestions.map(suggestion => {
+                    {suggestions.map((suggestion) => {
                         return suggestion[1].map((_, index) => (
                             <Row key={uuidv4()} className="mb-3">
-                                <Col>{suggestion[0]}</Col>
-                                <Col>{suggestion[1][index]}</Col>
+                                {/*Situation*/}
+                                <Col>{suggestion[0]}</Col> 
+                                {/*Action needed*/}
+                                <Col>{suggestion[1][index]}</Col>{" "}
                                 <Col>
+                                    {/*Resource*/}
                                     <a
                                         key={uuidv4()}
                                         href={suggestion[3][index].link}

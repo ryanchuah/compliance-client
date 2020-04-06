@@ -24,7 +24,10 @@ function History(props) {
             <h1 className="my-4">Conversation History</h1>
 
             {conversationHistory.map((_, i) => {
-                if (i == 3 * n) {
+                // history array is stored in groups of 3
+                // 0th element: timestamp, 1st element: user message, 2nd element: bot message
+                // this pattern repeats for elements number 3,4,5 and 6,7,8 and so on
+                if (i == 3 * n) { // timestamp
                     const messageTime = conversationHistory[i];
                     const messageDate = messageTime.substring(0, 10);
                     const messageHoursMinutes = messageTime.substring(11, 16);
@@ -36,14 +39,14 @@ function History(props) {
                             </h4>
                         );
                     }
-                } else if (i == 3 * n + 1) {
+                } else if (i == 3 * n + 1) { // user message
                     return (
                         <p key={uuidv4()}>
                             <b>{props.user.userData.name}:</b>{" "}
                             {conversationHistory[i]}
                         </p>
                     );
-                } else if (i == 3 * n + 2) {
+                } else if (i == 3 * n + 2) { // bot message
                     n += 1;
                     return (
                         <p key={uuidv4()}>

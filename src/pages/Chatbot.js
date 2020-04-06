@@ -18,16 +18,20 @@ function Chatbot(props) {
             var history = await axios.get("/api/userData/history");
             history = history.data;
             var n = 0;
+
+            // history array is stored in groups of 3
+            // 0th element: timestamp, 1st element: user message, 2nd element: bot message
+            // this pattern repeats for elements number 3,4,5 and 6,7,8 and so on
             for (let i = 0; i < history.length; i++) {
-                if (i !== 3 * n) {
-                    // ignore timestamps
-                    if (i == 3 * n + 1) {
+                if (i !== 3 * n) { // ignore timestamps
+                    
+                    if (i == 3 * n + 1) { // human message
                         var msg = {
                             text: history[i],
                             user: "human"
                         };
                         resultHistory.push(msg);
-                    } else {
+                    } else { // bot message
                         var msg = {
                             text: history[i],
                             user: "ai"
@@ -41,6 +45,7 @@ function Chatbot(props) {
             setHistoryIsLoading(false);
             scrollToBottom(200);
         }
+
         if (!(props.user && props.user.sessionID)) {
             // user is guest
             setHistoryIsLoading(false);
@@ -57,6 +62,7 @@ function Chatbot(props) {
     } else {
         //user is visitor
         if (!localStorage.getItem("sessionID")) {
+            // if no sessionID in local storage, set sessionID in local storage
             localStorage.setItem("sessionID", uuidv4());
         }
         var sessionID = localStorage.getItem("sessionID");
@@ -73,6 +79,7 @@ function Chatbot(props) {
     const handleSubmit = async event => {
         // preventing a default browser reloading
         event.preventDefault();
+
         if (!userMessage.trim()) {
             return;
         }
@@ -81,6 +88,8 @@ function Chatbot(props) {
             text: userMessage,
             user: "human"
         };
+
+        // clear user's input box
         setUserMessage("");
 
         setConversationHistory(conversationHistory => [
@@ -88,6 +97,7 @@ function Chatbot(props) {
             msg
         ]);
 
+        // post user's message to dialogflow then await response message for bot to reply with
         const response = await fetch("/api/inputText", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

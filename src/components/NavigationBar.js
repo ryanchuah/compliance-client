@@ -51,6 +51,7 @@ function NavigationBar(props) {
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/register">Register</Nav.Link>
                 <Nav.Link href="/chatbot">Guest Chatbot</Nav.Link>
+                <Nav.Link href="/disclaimer">Disclaimer</Nav.Link>
             </React.Fragment>
         );
     }

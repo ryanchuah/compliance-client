@@ -17,36 +17,38 @@ function App() {
     const [user, setUser] = useState({
         isLoggedIn: undefined,
         user: null,
-        sessionID: null
+        sessionID: null,
     });
-    const [userIsLoading, setUserIsLoading] = useState(true)
+    const [userIsLoading, setUserIsLoading] = useState(true);
 
-    useEffect(()=>{
-        if (userIsLoading){
-            axios.get("/user/").then(response => {
+    useEffect(() => {
+        // check status of user logged in or not
+
+        if (userIsLoading) {
+            axios.get("/user/").then((response) => {
                 if (response.data.user) {
                     console.log(
                         "Get User: There is a user saved in the server session: "
                     );
                     console.log(response.data.user);
-    
+
                     setUser({
                         isLoggedIn: true,
                         userData: response.data.user,
-                        sessionID: response.data.sessionID
+                        sessionID: response.data.sessionID,
                     });
                 } else {
                     console.log("Get user: no user");
                     setUser({
                         isLoggedIn: false,
                         user: null,
-                        sessionID: null
+                        sessionID: null,
                     });
                 }
-                setUserIsLoading(false)
+                setUserIsLoading(false);
             });
         }
-    }, [userIsLoading])
+    }, [userIsLoading]);
 
     if (userIsLoading) {
         var activeRoutes = (
@@ -57,9 +59,9 @@ function App() {
                         "/dashboard",
                         "/chatbot",
                         "/history",
-                        "/suggestions"
+                        "/suggestions",
                     ]}
-                    render={props => {
+                    render={(props) => {
                         return <LoadingScreen />;
                     }}
                 />
@@ -71,30 +73,50 @@ function App() {
                 <Route
                     exact
                     path={["/", "/dashboard", "/login", "/register"]}
-                    render={props => {
-                        return <Dashboard user={user} userIsLoading={userIsLoading}/>;
+                    render={(props) => {
+                        return (
+                            <Dashboard
+                                user={user}
+                                userIsLoading={userIsLoading}
+                            />
+                        );
                     }}
                 />
                 <Route
                     exact
                     path="/history"
-                    render={props => {
-                        return <History user={user} userIsLoading={userIsLoading} />;
+                    render={(props) => {
+                        return (
+                            <History
+                                user={user}
+                                userIsLoading={userIsLoading}
+                            />
+                        );
                     }}
                 />
                 <Route
                     exact
                     path="/suggestions"
-                    render={props => {
-                        return <Suggestions user={user} userIsLoading={userIsLoading} />;
+                    render={(props) => {
+                        return (
+                            <Suggestions
+                                user={user}
+                                userIsLoading={userIsLoading}
+                            />
+                        );
                     }}
                 />
                 <Route
                     exact
                     path="/chatbot"
-                    render={props => {
+                    render={(props) => {
                         window.refreshChatbot = true;
-                        return <Chatbot user={user} userIsLoading={userIsLoading} />;
+                        return (
+                            <Chatbot
+                                user={user}
+                                userIsLoading={userIsLoading}
+                            />
+                        );
                     }}
                 />
             </React.Fragment>
@@ -105,50 +127,53 @@ function App() {
                 <Route
                     exact
                     path={["/", "/login"]}
-                    render={props => {
+                    render={(props) => {
                         return <Login setUser={setUser} />;
                     }}
                 />
                 <Route
                     exact
                     path="/chatbot"
-                    render={props => {
+                    render={(props) => {
                         window.refreshChatbot = true;
-                        return <Chatbot user={user} userIsLoading={userIsLoading} />;
+                        return (
+                            <Chatbot
+                                user={user}
+                                userIsLoading={userIsLoading}
+                            />
+                        );
                     }}
                 />
                 <Route
                     exact
                     path="/dashboard"
-                    render={props => {
-                        return <p>Not logged in</p>;
+                    render={(props) => {
+                        return <Login setUser={setUser} />;
                     }}
                 />
                 <Route
                     exact
                     path="/history"
-                    render={props => {
-                        return <p>Not logged in</p>;
+                    render={(props) => {
+                        return <Login setUser={setUser} />;
                     }}
                 />
-                {/* <Route
-            exact
-            path="/suggestions"
-            render={props => {
-                return <p>Not logged in</p>;
-            }}
-        /> */}
                 <Route
                     exact
                     path="/suggestions"
-                    render={props => {
-                        return <Suggestions user={user} userIsLoading={userIsLoading} />;
+                    render={(props) => {
+                        return (
+                            <Suggestions
+                                user={user}
+                                userIsLoading={userIsLoading}
+                            />
+                        );
                     }}
                 />
                 <Route
                     exact
                     path="/register"
-                    render={props => {
+                    render={(props) => {
                         return <Register />;
                     }}
                 />
@@ -157,22 +182,26 @@ function App() {
     }
     return (
         <Router>
-            <NavigationBar user={user} userIsLoading={userIsLoading} setUser={setUser} setUserIsLoading={setUserIsLoading}/>
-            {user.loggedIn && <p>Join the party, {user.username}!</p>}
+            <NavigationBar
+                user={user}
+                userIsLoading={userIsLoading}
+                setUser={setUser}
+                setUserIsLoading={setUserIsLoading}
+            />
             <div className="mx-5">
                 {activeRoutes}
                 <Route
                     exact
                     path="/disclaimer"
-                    render={props => {
+                    render={(props) => {
                         return <Disclaimer />;
                     }}
                 />
-                
+
                 <Route
                     exact
                     path="/serverError"
-                    render={props => {
+                    render={(props) => {
                         return <ServerError />;
                     }}
                 />
